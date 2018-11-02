@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+<form method="post">
+    <fieldset>
+        <legend>Calculate Time</legend>
+        <div>
+            <label for="CurrentTime">Current Time</label>
+            <input type="time" name="CurrentTime" value="@DateTime.Now.ToString("HH:mm")" />
+        </div>
+        <div>
+            <label for="TimeToLeave">wanneer gaat u weg?</label>
+            <input type="time" name="TimeToLeave" required />
+        </div>
+        <div>
+            <label>&nbsp;</label>
+            <input type="submit" value="Submit" class="btn btn-default" />
+        </div>
+    </fieldset>
+</form>
+<br />
+<br />
+<br />
+<br />
+@{
+    if (IsPost)
+    {
+        string CurrentTime = Request.Form["CurrentTime"];
+        string TimeToLeave = Request.Form["TimeToLeave"];
+
+
+
+        string span = TimeToLeave;
+        string span2 = CurrentTime;
+
+        TimeSpan ts = new TimeSpan(int.Parse(span.Split(':')[0]),    // hours
+                           int.Parse(span.Split(':')[1]),    // minutes
+                           0);
+
+        TimeSpan ts2 = new TimeSpan(int.Parse(span2.Split(':')[0]),    // hours
+                           int.Parse(span2.Split(':')[1]),    // minutes
+                           0);
+
+        TimeSpan timetowork = ts - ts2;
+
+
+
+        <text>
+        <div class="list-group">
+            <ul>
+                <li class="list-group-item"> Huidige tijd: @CurrentTime </li>
+                
+                <li class="list-group-item"> wanneer u weg gaat: @TimeToLeave</li>
+            
+                <li class="list-group-item"> hoelang het nog duurt voordat u mag gaan: @timetowork</li>
+            </ul>
+           
+        </div>
+        </text>
+    }
+}
